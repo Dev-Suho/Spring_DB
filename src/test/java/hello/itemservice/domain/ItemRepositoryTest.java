@@ -4,23 +4,21 @@ import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Mapper Test
- */
+
+@Slf4j
 @Transactional
 @SpringBootTest
 class ItemRepositoryTest {
@@ -28,14 +26,14 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
-    /*
+/*
     @Autowired
-     PlatformTransactionManager transactionManager;
+    PlatformTransactionManager transactionManager;
     TransactionStatus status;
 
     @BeforeEach
     void beforeEach() {
-        // 트랜잭션 시작
+        //트랜잭션 시작
         status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 */
@@ -46,11 +44,9 @@ class ItemRepositoryTest {
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
-        // 트랜잭션 롤백
-      //  transactionManager.rollback(status);
+        //트랜잭션 롤백
+        //transactionManager.rollback(status);
     }
-
-
 
     @Test
     void save() {
@@ -90,6 +86,7 @@ class ItemRepositoryTest {
         Item item2 = new Item("itemA-2", 20000, 20);
         Item item3 = new Item("itemB-1", 30000, 30);
 
+        log.info("repository={}", itemRepository.getClass());
         itemRepository.save(item1);
         itemRepository.save(item2);
         itemRepository.save(item3);
