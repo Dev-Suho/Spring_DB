@@ -2,7 +2,6 @@ package hello.itemservice.config;
 
 
 import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.jpa.JpaItemRepository;
 import hello.itemservice.repository.jpa.JpaItemRepositoryV2;
 import hello.itemservice.repository.jpa.SpringDataJpaItemRepository;
 import hello.itemservice.service.ItemService;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManager;
 @Configuration
 @RequiredArgsConstructor
 public class SpringDataJpaConfig {
